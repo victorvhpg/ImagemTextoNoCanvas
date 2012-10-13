@@ -28,7 +28,7 @@
             }
 
             #txtTexto{
-                width: 300px;
+                width: 290px;
                 height: 100px;
             }
             #tamanhoFonte{
@@ -52,7 +52,7 @@
                 border:1px solid #000;
                 background-color: #fff;
                 padding:10px;
-                max-width: 400px
+                max-width: 300px
             }
         </style>
         <script type="text/javascript" >
