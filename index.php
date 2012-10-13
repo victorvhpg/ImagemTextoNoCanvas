@@ -45,6 +45,15 @@
             #botoesCanvas button{
                 padding: 15px;
             }
+
+            #containerMenu{
+                position:fixed;
+                right: 0;top: 0;
+                border:1px solid #000;
+                background-color: #fff;
+                padding:10px;
+                max-width: 400px
+            }
         </style>
         <script type="text/javascript" >
             
@@ -115,7 +124,7 @@
                     },
                     init : function(config){
                         var c = ImagemTextoNoCanvas.init({
-                            largura : 600 ,
+                            largura : 400 ,
                             altura : 400,
                             $container : config.$caContainer
                         });
@@ -261,8 +270,8 @@
                 <div id="configCanvas" >
 
                     <strong> Dimensões: </strong><br />
-                    largura: <input  data-config="largura"  size="4" type="number" step="10" min="70" max="700" value="500" /> 
-                    altura: <input  data-config="altura"    size="4" type="number" step="10" min="70" max="700" value="300" />
+                    largura: <input  data-config="largura"  size="4" type="number" step="10" min="70" max="700" value="400" /> 
+                    altura: <input  data-config="altura"    size="4" type="number" step="10" min="70" max="700" value="400" />
                     <br />
                     <strong > Imagem de Fundo: </strong>
                     <input type="file" accept="image/*" id="fundoImagem"    />
@@ -276,7 +285,7 @@
                 </div>
 
             </div>
-            <div id="containerMenu"  style="position:fixed;right: 0;top: 0;background-color: #fff;padding:10px;max-width: 400px">
+            <div id="containerMenu"   >
 
                 <strong>  Adicionar Recursos na Imagem: </strong>
                 <div>
