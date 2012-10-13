@@ -262,7 +262,7 @@
                                     alert("imagem publicada com sucesso :)");
                                     //falta fazer o limpar canvas
                                     //por enquanto  entao recarrega a pagina  :( 
-                                    top.location.href =  top.location.href;
+                                    top.location.href =   GerenciaFB.APP.appUrlFacebookApp;
                                 }
                             });
                         }, false);
