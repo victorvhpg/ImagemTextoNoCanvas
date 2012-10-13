@@ -153,6 +153,13 @@
                         
                     },
                     init : function(config){
+                        
+                        if(!(window.JSON && window.File && window.FileReader && window.Blob && window.Uint8Array)){
+                            alert("ATENÇÃO seu navegador está desatualizado ou não segue os padroes WEB, para usar esta APP por favor use FIREFOX ou CHROME atualizados");
+                            
+                        }
+                        
+                        
                         var c = ImagemTextoNoCanvas.init({
                             largura : 400 ,
                             altura : 400,
