@@ -1,4 +1,14 @@
 <!DOCTYPE html>
+<!--
+
+/**
+ * @victorvhpg
+ * https://github.com/victorvhpg/ImagemTextoNoCanvas
+ */
+
+
+-->
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -42,20 +52,40 @@
                 text-align: center;
                 padding: 10px;
             }
-            #botoesCanvas button{
+            #botoesCanvas input[type="text"]{
                 padding: 15px;
             }
 
             #containerMenu{
                 position:fixed;
-                right: 0;top: 0;
+                right: 0;top: 55px;
                 border:1px solid #000;
                 background-color: #fff;
                 padding:10px;
                 max-width: 300px
             }
+
+            .codigoGitHub{
+                position: fixed;
+                top:0;
+                right: 0;
+                font-size: 12px;
+                background-color: #000;
+                padding: 5px;
+                color:#fff;
+            }
+            .codigoGitHub a{
+                color:#fff;
+                text-decoration: none;
+            }
         </style>
         <script type="text/javascript" >
+            
+            /**
+             * @victorvhpg
+             * https://github.com/victorvhpg/ImagemTextoNoCanvas
+             */
+
             
             (function(){
                 
@@ -218,9 +248,15 @@
                             var v =  document.querySelector("#btnPublicarImagem").value;
                             document.querySelector("#btnPublicarImagem").value="publicando no facebook...";
                             upload =true;
-                            GerenciaFB.uploadFotoAjax( GerenciarImagemTextoNoCanvas.canvasAtual.canvas.toDataURL() , "upload imagem: https://apps.facebook.com/imagemtextonocanvas/ ",function(){
+                            GerenciaFB.uploadFotoAjax( GerenciarImagemTextoNoCanvas.canvasAtual.canvas.toDataURL() , "upload imagem: https://apps.facebook.com/imagemtextonocanvas/ ",function(respostaJSON){
                                 document.querySelector("#btnPublicarImagem").value = v;
                                 upload = false;
+                                if(respostaJSON && respostaJSON.id){
+                                    alert("imagem publicada com sucesso :)");
+                                    //falta fazer o limpar canvas
+                                    //por enquanto  entao recarrega a pagina  :( 
+                                    top.location =  top.location;
+                                }
                             });
                         }, false);
                         
@@ -238,9 +274,9 @@
                             //url da app no facebook
                             appUrlFacebookApp : "https://apps.facebook.com/imagemtextonocanvas", 
                             //permissoes que a app  tera
-                            permissoes :  "publish_stream,user_online_presence,user_checkins",   
+                            permissoes :  "publish_stream",   
                             //permissoes obrigatorias , fica pedindo ate o usuario aceite senao aceitar  fica em loop pedindo :)
-                            permissoesObrigatorias : ["publish_stream","user_online_presence"] 
+                            permissoesObrigatorias : ["publish_stream"] 
                         },function(APP){
                             //tudo OK
                            
@@ -248,9 +284,9 @@
                       
                     },
                     
-                    adicionarCanvas : function(){
-                        console.log("...");
-                    
+                    adicionarCanvas : function(config){
+                      
+                        //...
                     }
                     
             
@@ -322,12 +358,13 @@
                         OBS: Depois que adiconar  uma imagem, clique e arraste a  imagem para mudar as coordenadas da imagem no canvas.
                     </div>
 
-                    <div style="margin-top:30px" >
-                        <strong> Recursos já Adicionados: </strong><br />
-                        <div id="divListaRecursos">
-                            ..... ???
-                        </div>
-                    </div>
+                    <!--  <div style="margin-top:30px" >
+                          <strong> Recursos já Adicionados: </strong><br />
+                          <div id="divListaRecursos">
+                              .....
+                          </div>
+                      </div>
+                    -->
                 </div>
 
 
@@ -336,6 +373,11 @@
             <div style="clear:both"></div>
         </div>
 
-
+        <div  class="codigoGitHub" >
+            Código fonte disponível no GitHub<br />
+            <a target="_blank" href="https://github.com/victorvhpg/ImagemTextoNoCanvas">
+                ->  @victorvhpg
+            </a> 
+        </div>
     </body>
 </html>

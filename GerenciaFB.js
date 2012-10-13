@@ -1,4 +1,8 @@
- 
+ /**
+ * @victorvhpg
+ * https://github.com/victorvhpg/ImagemTextoNoCanvas
+ */
+
 var GerenciaFB = {
     APP : {
         //id  da app

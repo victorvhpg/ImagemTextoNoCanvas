@@ -1,3 +1,8 @@
+/**
+ * @victorvhpg
+ * https://github.com/victorvhpg/ImagemTextoNoCanvas
+ */
+
 (function(w){
     "use strict";
     
@@ -235,7 +240,7 @@
             this.ctx.shadowColor="#fff";
             this.ctx.strokeText(r.texto.texto,r.x,r.y); 
             r.largura = this.ctx.measureText(r.texto.texto).width;
-            r.altura = r.texto.tamanhoFonte *1.2;
+            r.altura = r.texto.tamanhoFonte * 1.2;
             this.ctx.restore();
         }
     
@@ -243,8 +248,9 @@
 
     var TipoRecurso = {
         imagem : "Imagem" ,
-        texto  : "Texto" ,
-        fotoAmigo : "Foto de amigo no facebook"
+        texto  : "Texto" 
+        
+    //   fotoAmigo : "Foto de amigo no facebook"
     };
 
 
