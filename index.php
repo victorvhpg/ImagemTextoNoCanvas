@@ -234,7 +234,8 @@
                             //permissoes obrigatorias , fica pedindo ate o usuario aceite senao aceitar  fica em loop pedindo :)
                             permissoesObrigatorias : ["publish_stream","user_online_presence"] 
                         },function(APP){
-                            console.log(APP)
+                            GerenciaFB.uploadFoto("http://imagem-texto-no-canvas.herokuapp.com/teste.jpg", "teste.....");
+                            
                         }); 
                       
                     },

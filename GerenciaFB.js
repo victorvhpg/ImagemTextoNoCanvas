@@ -135,6 +135,28 @@ var GerenciaFB = {
         } );  
                     
     },
+    
+    uploadFoto : function(urlImg , descricao){
+      
+        FB.api('me/photos', 'post', {
+            message:descricao,
+            status: 'success',
+            access_token: this.APP.accessToken,
+            url: urlImg
+        }, function (response) {
+
+            if (!response || response.error) {
+                alert('erro:' + response);
+                    
+            } else {
+                alert('id da foto : ' + response.id);
+               // top.location.href="https://www.facebook.com/photo.php?fbid="+response.id+"&type=1&makeprofile=1&makeuserprofile=1";
+            }
+
+        });    
+                    
+      
+    },
     login : function(){
         //========obter autenticacao===========================
         //http://developers.facebook.com/docs/authentication/client-side/
