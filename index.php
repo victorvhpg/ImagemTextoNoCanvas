@@ -52,7 +52,7 @@
                 text-align: center;
                 padding: 10px;
             }
-            #botoesCanvas input[type="text"]{
+            #botoesCanvas input[type="button"]{
                 padding: 15px;
             }
 
@@ -262,7 +262,7 @@
                                     alert("imagem publicada com sucesso :)");
                                     //falta fazer o limpar canvas
                                     //por enquanto  entao recarrega a pagina  :( 
-                                    top.location =  top.location;
+                                    top.location.href =  top.location.href;
                                 }
                             });
                         }, false);
