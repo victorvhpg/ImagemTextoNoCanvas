@@ -260,7 +260,7 @@
                             var v =  document.querySelector("#btnPublicarImagem").value;
                             document.querySelector("#btnPublicarImagem").value="Aguarde... publicando no facebook . . .";
                             upload =true;
-                            GerenciaFB.uploadFotoAjax( GerenciarImagemTextoNoCanvas.canvasAtual.canvas.toDataURL() , "upload imagem: https://apps.facebook.com/imagemtextonocanvas/ ",function(respostaJSON){
+                            GerenciaFB.uploadFotoAjax( GerenciarImagemTextoNoCanvas.canvasAtual.canvas.toDataURL() , "upload/manipulação de imagem 100% #JAVASCRIPT : https://apps.facebook.com/imagemtextonocanvas/ ",function(respostaJSON){
                                 document.querySelector("#btnPublicarImagem").value = v;
                                 upload = false;
                                 if(respostaJSON && respostaJSON.id){
