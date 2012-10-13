@@ -19,6 +19,7 @@ var GerenciaFB = {
                    
         //este metodo sera chamado pelo o SDK FB quando ele estiver carregado
         window.fbAsyncInit = function() {
+            alert(2)
             //https://developers.facebook.com/docs/reference/javascript/FB.init/
             FB.init({
                 appId      : APP.id, // App ID
@@ -27,27 +28,29 @@ var GerenciaFB = {
                 cookie     : false, // cookie para acessar no servidor
                 xfbml      : false // usa tags xfbml
             });
+            
+            //https://developers.facebook.com/docs/reference/javascript/FB.getLoginStatus/
+            FB.getLoginStatus(function (respostaJSON) {
+                if (respostaJSON.status === 'connected') {//autenticado e possui acesso a APP
+                    GerenciaFB.APP.userID = respostaJSON.authResponse.userID;
+                    GerenciaFB.APP.accessToken = respostaJSON.authResponse.accessToken;
+                    if(GerenciaFB.APP.permissoesObrigatorias.length > 0 ){
+                        //verifica se tem as permissoes obrigatorias
+                        GerenciaFB.verificaPermissoesObrigatorias();
+                    }else{
+                        //oba! ja ta tudo OK
+                        callbackQuandoAutenticado(GerenciaFB.APP);
+                    }   
+                } else if (JSON.status === 'not_authorized') {
+                    //nao deu acesso
+                    GerenciaFB.login();
+                } else {
+                    //nao esta logado no FB
+                    GerenciaFB.login();
+                }
+            });
         };
-        //https://developers.facebook.com/docs/reference/javascript/FB.getLoginStatus/
-        FB.getLoginStatus(function (respostaJSON) {
-            if (respostaJSON.status === 'connected') {//autenticado e possui acesso a APP
-                GerenciaFB.APP.userID = respostaJSON.authResponse.userID;
-                GerenciaFB.APP.accessToken = respostaJSON.authResponse.accessToken;
-                if(GerenciaFB.APP.permissoesObrigatorias.length > 0 ){
-                    //verifica se tem as permissoes obrigatorias
-                    GerenciaFB.verificaPermissoesObrigatorias();
-                }else{
-                    //oba! ja ta tudo OK
-                    callbackQuandoAutenticado(GerenciaFB.APP);
-                }   
-            } else if (JSON.status === 'not_authorized') {
-                //nao deu acesso
-                GerenciaFB.login();
-            } else {
-                //nao esta logado no FB
-                GerenciaFB.login();
-            }
-        });
+
                     
         //carrega o SDK js do facebook
         this.carregaSDK();
@@ -56,7 +59,7 @@ var GerenciaFB = {
     pedeAcesso : function(callback){
         FB.ui({
             method: 'permissions.request',
-            perms: this.APP.scope,
+            perms: this.APP.permissoes,
             display: 'iframe',
             access_token :this.APP.accessToken 
         },function(respostaJSON) {
@@ -80,20 +83,20 @@ var GerenciaFB = {
                 //pede novamente  as permissoes  caso nao tenha
                 GerenciaFB.pedeAcesso(function callback(respostaJSON){
                     console.log(respostaJSON);
-                 //   if(respostaJSON && respostaJSON.perms){ // && respostaJSON.perms.indexOf("publish_stream")>=0){
-                   //     for( var i = 0 ; i < GerenciaFB.APP.permissoesObrigatorias.length;i++ ){
+                //   if(respostaJSON && respostaJSON.perms){ // && respostaJSON.perms.indexOf("publish_stream")>=0){
+                //     for( var i = 0 ; i < GerenciaFB.APP.permissoesObrigatorias.length;i++ ){
                                         
                                         
-                     //       }
-                        /*   if(!nao){
+                //       }
+                /*   if(!nao){
                                        GerenciaFB.pedeAcesso(callback); 
                                    } */
-                        //oba! ja ta tudo OK
-                      //  callbackQuandoAutenticado(GerenciaFB.APP);
-                   // }else{
-                        //fica pedindo  em loop
-                   //     GerenciaFB.pedeAcesso(callback);
-                    //}
+                //oba! ja ta tudo OK
+                //  callbackQuandoAutenticado(GerenciaFB.APP);
+                // }else{
+                //fica pedindo  em loop
+                //     GerenciaFB.pedeAcesso(callback);
+                //}
                 }); 
             }else{
                 //oba!! tem todas as permissoes ;)

@@ -4,8 +4,9 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <title>ImagemTextoNoCanvas </title>
 
-     
+
         <script type="text/javascript" src="ImagemTextoNoCanvas.js"></script>
+        <script type="text/javascript" src="GerenciaFB.js"></script>
         <style>
             body{
                 background-color: #333;
@@ -208,7 +209,7 @@
                         }, false);
                         
                         
-                        
+                        this.inicioFB();
                         
                     },//init
                     inicioFB : function(){
@@ -224,7 +225,7 @@
                             //permissoes obrigatorias , fica pedindo ate o usuario aceite senao aceitar  fica em loop pedindo :)
                             permissoesObrigatorias : ["publish_stream"] 
                         },function(APP){
-           
+                            console.log(APP)
                         }); 
                       
                     },
