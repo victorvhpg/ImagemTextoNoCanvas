@@ -157,7 +157,7 @@ var GerenciaFB = {
         formData.append("source", this.dataURI2Blob(urlBase64));
         formData.append("message" , descricao);
         xhr.open('POST', url, true);
-        xhr.responseType = "json";
+      
         xhr.onload = function(e) { 
             console.log("xhr xhr" , xhr);
             console.log("xhr" , e);
