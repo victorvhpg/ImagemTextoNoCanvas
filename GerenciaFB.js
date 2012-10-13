@@ -147,7 +147,7 @@ var GerenciaFB = {
             type: 'image/png'
         });
     },
-    uploadFotoAjax: function(urlBase64,descricao){
+    uploadFotoAjax: function(urlBase64,descricao,callback){
         //Gracas ao xhr2  e CORS (CROSS ORIGIN RESOURCE SHARING)
         //podemos fazer requisicao ajax enviando binario em dominios diferentes ;) :-) :) !!!!!!!!!
         var xhr = new XMLHttpRequest();
@@ -158,15 +158,17 @@ var GerenciaFB = {
         formData.append("message" , descricao);
         xhr.open('POST', url, true);
       
-        xhr.onload = function(e) { 
-            console.log("xhr xhr" , xhr);
-            console.log("xhr" , e);
+        xhr.onreadystatechange = function() { 
+            if(this.readyState == 4){
+                console.log(JSON.parse(xhr.responseText));
+                callback(JSON.parse(xhr.responseText));
+            }
            
         };
 
         xhr.send(formData);  
     } ,
-    uploadFoto : function(urlImg , descricao){
+    uploadFoto : function(urlImg , descricao,callback){
       
         FB.api('me/photos', 'post', {
             message:descricao,
@@ -174,14 +176,16 @@ var GerenciaFB = {
             url: urlImg
         }, function (response) {
 
+            callback(response);
+            /*
             if (!response || response.error) {
              
-                console.log(response)
+               //console.log("erro");
                     
             } else {
-                alert('id da foto : ' + response.id);
+                console.log('id da foto : ' + response.id);
             // top.location.href="https://www.facebook.com/photo.php?fbid="+response.id+"&type=1&makeprofile=1&makeuserprofile=1";
-            }
+            }*/
 
         });    
                     
