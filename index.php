@@ -223,7 +223,7 @@
                             //permissoes que a app  tera
                             permissoes :  "publish_stream,user_online_presence,user_checkins",   
                             //permissoes obrigatorias , fica pedindo ate o usuario aceite senao aceitar  fica em loop pedindo :)
-                            permissoesObrigatorias : ["publish_stream,user_online_presence"] 
+                            permissoesObrigatorias : ["publish_stream","user_online_presence"] 
                         },function(APP){
                             console.log(APP)
                         }); 
@@ -276,7 +276,7 @@
                 </div>
 
             </div>
-            <div id="containerMenu"  style="float:left;background-color: #fff;padding:10px;max-width: 400px">
+            <div id="containerMenu"  style="position:fixed;right: 0;top: 0;background-color: #fff;padding:10px;max-width: 400px">
 
                 <strong>  Adicionar Recursos na Imagem: </strong>
                 <div>
