@@ -59,12 +59,16 @@ var GerenciaFB = {
     },
     pedeAcesso : function(callback){
         console.log("permissions.request");
+        
+        //abre uma tela pedindo permissao
         FB.ui({
             method: 'permissions.request',
             perms: this.APP.permissoes,
             display: 'iframe',
             access_token :this.APP.accessToken 
         },function(respostaJSON) {
+            //retorna um obj  que possui propriedade perms  com as permissoes aceitas
+            // ex :    {perms: "publish_stream,user_online_presence"}
             console.log("resposta de permissions.request");
             console.log(respostaJSON);
             callback(respostaJSON);
@@ -87,24 +91,38 @@ var GerenciaFB = {
             }
             //nao possui
             if(vetNaoPossui.length > 0){
+                console.log(vetNaoPossui)
                 console.log("nao possui em: " + vetNaoPossui.join("#"));
                 //pede novamente  as permissoes  caso nao tenha
                 GerenciaFB.pedeAcesso(function callback(respostaJSON){
                     console.log(respostaJSON);
-                //   if(respostaJSON && respostaJSON.perms){ // && respostaJSON.perms.indexOf("publish_stream")>=0){
-                //     for( var i = 0 ; i < GerenciaFB.APP.permissoesObrigatorias.length;i++ ){
-                                        
-                                        
-                //       }
-                /*   if(!nao){
-                                       GerenciaFB.pedeAcesso(callback); 
-                                   } */
-                //oba! ja ta tudo OK
-                //  callbackQuandoAutenticado(GerenciaFB.APP);
-                // }else{
-                //fica pedindo  em loop
-                //     GerenciaFB.pedeAcesso(callback);
-                //}
+                    if(respostaJSON && respostaJSON.perms){ // && respostaJSON.perms.indexOf("publish_stream")>=0){
+                        var vetAceitas = respostaJSON.perms.split(",");
+                        var ok = false;
+                        for( var i = 0 ; i < GerenciaFB.APP.permissoesObrigatorias.length;i++ ){
+                            var   permissao = GerenciaFB.APP.permissoesObrigatorias[i];
+                            ok = false;
+                            for(var j = 0; j < vetAceitas.length; j++  ){
+                                if(permissao == vetAceitas[j]){
+                                    ok = true;
+                                    break;
+                                }
+                            }
+                            if(!ok){
+                                break;
+                            }           
+                        }
+                        if(!ok){
+                            //fica pedindo  em loop
+                            GerenciaFB.pedeAcesso(callback); 
+                        }else{
+                            //  oba! ja ta tudo OK
+                            callbackQuandoAutenticado(GerenciaFB.APP);
+                        }  
+                    }else{
+                        //fica pedindo  em loop
+                        GerenciaFB.pedeAcesso(callback);
+                    }
                 }); 
             }else{
                 //oba!! tem todas as permissoes ;)
