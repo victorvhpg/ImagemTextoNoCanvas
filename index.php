@@ -217,8 +217,10 @@
                             }
                             var v =  document.querySelector("#btnPublicarImagem").value;
                             document.querySelector("#btnPublicarImagem").value="publicando no facebook...";
+                            upload =true;
                             GerenciaFB.uploadFotoAjax( GerenciarImagemTextoNoCanvas.canvasAtual.canvas.toDataURL() , "upload imagem: https://apps.facebook.com/imagemtextonocanvas/ ",function(){
                                 document.querySelector("#btnPublicarImagem").value = v;
+                                upload = false;
                             });
                         }, false);
                         
@@ -287,8 +289,8 @@
 
                 <div id="containerDoCanvas"  > </div>
                 <div id="botoesCanvas">
-                    <button type="button" id="btnDownload"> Download da Imagem</button>
-                    <button  type="button" id="btnPublicarImagem"> Upload da Imagem no Facebook</button>
+                    <input  value="Download da Imagem" type="button" id="btnDownload" />  
+                    <input  type="button" id="btnPublicarImagem" value="Upload da Imagem no Facebook"/>   
                 </div>
 
             </div>
