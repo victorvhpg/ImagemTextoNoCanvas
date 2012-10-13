@@ -1,7 +1,8 @@
  /**
  * @victorvhpg
  * https://github.com/victorvhpg/ImagemTextoNoCanvas
- */
+ */ 
+
 
 var GerenciaFB = {
     APP : {

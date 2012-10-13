@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <!--
-
 /**
  * @victorvhpg
  * https://github.com/victorvhpg/ImagemTextoNoCanvas
  */
-
-
 -->
 
 <html>
@@ -23,7 +20,7 @@
                 color:#fff;
 
 
-            }
+            }   
             *{
                 font-family: "Comic Sans MS", cursive;
             }
