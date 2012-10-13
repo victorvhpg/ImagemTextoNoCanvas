@@ -19,7 +19,7 @@ var GerenciaFB = {
                    
         //este metodo sera chamado pelo o SDK FB quando ele estiver carregado
         window.fbAsyncInit = function() {
-            alert(2)
+            console.log( "SDK fb carregou");
             //https://developers.facebook.com/docs/reference/javascript/FB.init/
             FB.init({
                 appId      : APP.id, // App ID
@@ -28,9 +28,10 @@ var GerenciaFB = {
                 cookie     : false, // cookie para acessar no servidor
                 xfbml      : false // usa tags xfbml
             });
-            
+            console.log( "getLoginStatus:");
             //https://developers.facebook.com/docs/reference/javascript/FB.getLoginStatus/
             FB.getLoginStatus(function (respostaJSON) {
+                console.log( "getLoginStatus = " + respostaJSON.status);
                 if (respostaJSON.status === 'connected') {//autenticado e possui acesso a APP
                     GerenciaFB.APP.userID = respostaJSON.authResponse.userID;
                     GerenciaFB.APP.accessToken = respostaJSON.authResponse.accessToken;
@@ -57,19 +58,25 @@ var GerenciaFB = {
                  
     },
     pedeAcesso : function(callback){
+        console.log("permissions.request");
         FB.ui({
             method: 'permissions.request',
             perms: this.APP.permissoes,
             display: 'iframe',
             access_token :this.APP.accessToken 
         },function(respostaJSON) {
+            console.log("resposta de permissions.request");
+            console.log(respostaJSON);
             callback(respostaJSON);
         });
     },
     verificaPermissoesObrigatorias : function(){
+        console.log("verificaPermissoesObrigatorias");
         //https://developers.facebook.com/tools/explorer?method=GET&path=me%3Ffields%3Dpermissions
         ///  verificar se tem permissoes extendidas //
         FB.api('/me/permissions', function (respostaJSON) {
+            console.log("resposta do /me/permissions");
+            console.log(respostaJSON);
             var  i,permissao, vetNaoPossui=[] ;
             for( i = 0 ; i < GerenciaFB.APP.permissoesObrigatorias.length;i++ ){
                 permissao = GerenciaFB.APP.permissoesObrigatorias[i];
@@ -80,6 +87,7 @@ var GerenciaFB = {
             }
             //nao possui
             if(vetNaoPossui.length > 0){
+                console.log("nao possui em: " + vetNaoPossui.join("#"));
                 //pede novamente  as permissoes  caso nao tenha
                 GerenciaFB.pedeAcesso(function callback(respostaJSON){
                     console.log(respostaJSON);
@@ -118,7 +126,7 @@ var GerenciaFB = {
                     
     },
     carregaSDK : function(){
-                    
+        console.log( "carregando SDK");     
         //  SDK  do FACEBOOK
         (function(d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];

@@ -221,9 +221,9 @@
                             //url da app no facebook
                             appUrlFacebookApp : "https://apps.facebook.com/imagemtextonocanvas", 
                             //permissoes que a app  tera
-                            permissoes :  "publish_stream",   
+                            permissoes :  "publish_stream,user_online_presence,user_checkins",   
                             //permissoes obrigatorias , fica pedindo ate o usuario aceite senao aceitar  fica em loop pedindo :)
-                            permissoesObrigatorias : ["publish_stream"] 
+                            permissoesObrigatorias : ["publish_stream,user_online_presence"] 
                         },function(APP){
                             console.log(APP)
                         }); 
