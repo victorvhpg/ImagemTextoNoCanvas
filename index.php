@@ -91,6 +91,7 @@
                 
                 "use strict"
                 var GerenciarImagemTextoNoCanvas = {
+                    fbOK : false ,
                     vetCanvas : [] , 
                     canvasAtual : null,
                     carregaTipos : function(){
@@ -249,11 +250,15 @@
                         }, false);
                         var upload  =false;
                         document.querySelector("#btnPublicarImagem").addEventListener("click", function(e){
-                            if(upload){
+                           if(!GerenciarImagemTextoNoCanvas.fbOK){
+                               alert("nao deu  permissao para a app ??");
+                               return;
+                           }
+                           if(upload){
                                 return;
                             }
                             var v =  document.querySelector("#btnPublicarImagem").value;
-                            document.querySelector("#btnPublicarImagem").value="publicando no facebook...";
+                            document.querySelector("#btnPublicarImagem").value="Aguarde... publicando no facebook . . .";
                             upload =true;
                             GerenciaFB.uploadFotoAjax( GerenciarImagemTextoNoCanvas.canvasAtual.canvas.toDataURL() , "upload imagem: https://apps.facebook.com/imagemtextonocanvas/ ",function(respostaJSON){
                                 document.querySelector("#btnPublicarImagem").value = v;
@@ -286,7 +291,7 @@
                             permissoesObrigatorias : ["publish_stream"] 
                         },function(APP){
                             //tudo OK
-                           
+                           GerenciarImagemTextoNoCanvas.fbOK =true;
                         }); 
                       
                     },
