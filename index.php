@@ -28,7 +28,7 @@
             }
 
             #txtTexto{
-                width: 290px;
+                width: 280px;
                 height: 100px;
             }
             #tamanhoFonte{
