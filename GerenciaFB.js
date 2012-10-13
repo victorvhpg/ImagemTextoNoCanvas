@@ -37,7 +37,10 @@ var GerenciaFB = {
                     GerenciaFB.APP.accessToken = respostaJSON.authResponse.accessToken;
                     if(GerenciaFB.APP.permissoesObrigatorias.length > 0 ){
                         //verifica se tem as permissoes obrigatorias
-                        GerenciaFB.verificaPermissoesObrigatorias();
+                        GerenciaFB.verificaPermissoesObrigatorias(function(){
+                            //oba! ja ta tudo OK
+                            callbackQuandoAutenticado(GerenciaFB.APP);
+                        });
                     }else{
                         //oba! ja ta tudo OK
                         callbackQuandoAutenticado(GerenciaFB.APP);
@@ -74,7 +77,7 @@ var GerenciaFB = {
             callback(respostaJSON);
         });
     },
-    verificaPermissoesObrigatorias : function(){
+    verificaPermissoesObrigatorias : function(callback){
         console.log("verificaPermissoesObrigatorias");
         //https://developers.facebook.com/tools/explorer?method=GET&path=me%3Ffields%3Dpermissions
         ///  verificar se tem permissoes extendidas //
@@ -94,7 +97,7 @@ var GerenciaFB = {
                 console.log(vetNaoPossui)
                 console.log("nao possui em: " + vetNaoPossui.join("#"));
                 //pede novamente  as permissoes  caso nao tenha
-                GerenciaFB.pedeAcesso(function callback(respostaJSON){
+                GerenciaFB.pedeAcesso(function callbackPermissao(respostaJSON){
                     console.log(respostaJSON);
                     if(respostaJSON && respostaJSON.perms){ // && respostaJSON.perms.indexOf("publish_stream")>=0){
                         var vetAceitas = respostaJSON.perms.split(",");
@@ -114,19 +117,19 @@ var GerenciaFB = {
                         }
                         if(!ok){
                             //fica pedindo  em loop
-                            GerenciaFB.pedeAcesso(callback); 
+                            GerenciaFB.pedeAcesso(callbackPermissao); 
                         }else{
                             //  oba! ja ta tudo OK
-                            callbackQuandoAutenticado(GerenciaFB.APP);
+                            callback();
                         }  
                     }else{
                         //fica pedindo  em loop
-                        GerenciaFB.pedeAcesso(callback);
+                        GerenciaFB.pedeAcesso(callbackPermissao);
                     }
                 }); 
             }else{
                 //oba!! tem todas as permissoes ;)
-                callbackQuandoAutenticado(GerenciaFB.APP);
+                callback();
             }
 
         } );  
