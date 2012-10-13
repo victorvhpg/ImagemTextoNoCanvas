@@ -135,22 +135,90 @@ var GerenciaFB = {
         } );  
                     
     },
-    
+    //convert uri base64  para tipo Blob
+    dataURI2Blob : function(dataURI) {
+        // http://www.ssicom.org/js/x675659.htm
+        var binario = atob(dataURI.split(',')[1]);
+        var b = [];
+        for(var i = 0; i < binario.length; i++) {
+            b.push(binario.charCodeAt(i));
+        }
+        return new Blob([new Uint8Array(b)], {
+            type: 'image/png'
+        });
+    },
+    uploadFotoAjax: function(urlBase64){
+        var xhr = new XMLHttpRequest();
+        var url = "https://graph.facebook.com/me/photos?access_token="+this.APP.accessToken;
+        var formData = new FormData();
+        formData.append("source", this.dataURI2Blob(urlBase64));
+        xhr.open('POST', url, true);
+        xhr.onload = function(e) { 
+            console.log("xhr" , e);
+           
+        };
+
+        xhr.send(formData);
+         
+        
+    } ,
+    uploadFoto3 : function(source , descricao){
+      
+        FB.api('me/photos', 'post', {
+            message:descricao,
+            access_token: this.APP.accessToken,
+            source :atob(source.split(',')[1])
+        }, function (response) {
+
+            if (!response || response.error) {
+             
+                console.log("3",response)
+                    
+            } else {
+                alert('33333id da fodddddto : ' + response.id);
+            // top.location.href="https://www.facebook.com/photo.php?fbid="+response.id+"&type=1&makeprofile=1&makeuserprofile=1";
+            }
+
+        });    
+                    
+      
+    },
+    uploadFoto2 : function(source , descricao){
+      
+        FB.api('me/photos', 'post', {
+            message:descricao,
+            access_token: this.APP.accessToken,
+            source: source
+        }, function (response) {
+
+            if (!response || response.error) {
+             
+                console.log("2",response)
+                    
+            } else {
+                alert('222222id da fodddddto : ' + response.id);
+            // top.location.href="https://www.facebook.com/photo.php?fbid="+response.id+"&type=1&makeprofile=1&makeuserprofile=1";
+            }
+
+        });    
+                    
+      
+    },
     uploadFoto : function(urlImg , descricao){
       
         FB.api('me/photos', 'post', {
             message:descricao,
-            status: 'success',
             access_token: this.APP.accessToken,
             url: urlImg
         }, function (response) {
 
             if (!response || response.error) {
-                alert('erro:' + response);
+             
+                console.log(response)
                     
             } else {
                 alert('id da foto : ' + response.id);
-               // top.location.href="https://www.facebook.com/photo.php?fbid="+response.id+"&type=1&makeprofile=1&makeuserprofile=1";
+            // top.location.href="https://www.facebook.com/photo.php?fbid="+response.id+"&type=1&makeprofile=1&makeuserprofile=1";
             }
 
         });    
