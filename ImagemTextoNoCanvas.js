@@ -1,6 +1,7 @@
 /**
  * @victorvhpg
  * https://github.com/victorvhpg/ImagemTextoNoCanvas
+ * 
  */
 
 (function(w){
