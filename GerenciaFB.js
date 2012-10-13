@@ -135,7 +135,7 @@ var GerenciaFB = {
         } );  
                     
     },
-    //convert uri base64  para tipo Blob
+    //converte uri base64  para tipo Blob
     dataURI2Blob : function(dataURI) {
         // http://www.ssicom.org/js/x675659.htm
         var binario = atob(dataURI.split(',')[1]);
@@ -147,63 +147,25 @@ var GerenciaFB = {
             type: 'image/png'
         });
     },
-    uploadFotoAjax: function(urlBase64){
+    uploadFotoAjax: function(urlBase64,descricao){
+        //Gracas ao xhr2  e CORS (CROSS ORIGIN RESOURCE SHARING)
+        //podemos fazer requisicao ajax enviando binario em dominios diferentes ;) :-) :) !!!!!!!!!
         var xhr = new XMLHttpRequest();
         var url = "https://graph.facebook.com/me/photos?access_token="+this.APP.accessToken;
         var formData = new FormData();
+        //converte a imagem para binario e coloca no form
         formData.append("source", this.dataURI2Blob(urlBase64));
+        formData.append("message" , descricao);
         xhr.open('POST', url, true);
+        xhr.responseType = "json";
         xhr.onload = function(e) { 
+            console.log("xhr xhr" , xhr);
             console.log("xhr" , e);
            
         };
 
-        xhr.send(formData);
-         
-        
+        xhr.send(formData);  
     } ,
-    uploadFoto3 : function(source , descricao){
-      
-        FB.api('me/photos', 'post', {
-            message:descricao,
-            access_token: this.APP.accessToken,
-            source :atob(source.split(',')[1])
-        }, function (response) {
-
-            if (!response || response.error) {
-             
-                console.log("3",response)
-                    
-            } else {
-                alert('33333id da fodddddto : ' + response.id);
-            // top.location.href="https://www.facebook.com/photo.php?fbid="+response.id+"&type=1&makeprofile=1&makeuserprofile=1";
-            }
-
-        });    
-                    
-      
-    },
-    uploadFoto2 : function(source , descricao){
-      
-        FB.api('me/photos', 'post', {
-            message:descricao,
-            access_token: this.APP.accessToken,
-            source: source
-        }, function (response) {
-
-            if (!response || response.error) {
-             
-                console.log("2",response)
-                    
-            } else {
-                alert('222222id da fodddddto : ' + response.id);
-            // top.location.href="https://www.facebook.com/photo.php?fbid="+response.id+"&type=1&makeprofile=1&makeuserprofile=1";
-            }
-
-        });    
-                    
-      
-    },
     uploadFoto : function(urlImg , descricao){
       
         FB.api('me/photos', 'post', {
