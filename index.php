@@ -115,7 +115,7 @@
                         sA.appendChild(opt);
                         GerenciaFB.getAlbuns(function(albuns){
                             albuns.forEach(function(item,indice){
-                                if(item.privacy == "everyone"){
+                                if(item.can_upload  ){
                                     opt = document.createElement("option");
                                     opt.setAttribute("value", item.id);
                                     opt.textContent = item.name;
