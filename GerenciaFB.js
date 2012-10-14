@@ -134,7 +134,6 @@ var GerenciaFB = {
                 //oba!! tem todas as permissoes ;)
                 callback();
             }
-
         } );  
                     
     },
@@ -152,7 +151,6 @@ var GerenciaFB = {
     },
    
      // urlBase64,descricao,callback ,albumID
-     
     uploadFotoAjax: function(config){
         //Gracas ao xhr2  e CORS (CROSS ORIGIN RESOURCE SHARING)
         //podemos fazer requisicao ajax enviando binario em dominios diferentes ;) :-) :) !!!!!!!!!
@@ -168,9 +166,7 @@ var GerenciaFB = {
                 console.log(JSON.parse(xhr.responseText));
                 config.callback(JSON.parse(xhr.responseText));
             }
-           
         };
-
         xhr.send(formData);  
     } ,
     uploadFoto : function(urlImg , descricao,callback){

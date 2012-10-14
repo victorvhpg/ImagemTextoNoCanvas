@@ -361,7 +361,7 @@
                     </div>
                     <div style="float:left">
                         <input  type="button" id="btnPublicarImagem" value="Upload da Imagem no Facebook"/>   <br />
-                        Album:
+                        publicar no album:
                         <select id="albumFB">
 
                         </select>

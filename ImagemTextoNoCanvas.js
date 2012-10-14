@@ -63,8 +63,7 @@
             return this;
         },
         destacaRecurso : function(){
-            
-            
+ 
         },
         movimentaRecurso:function(x,y){
             if(this.recursoMovendo === null){
