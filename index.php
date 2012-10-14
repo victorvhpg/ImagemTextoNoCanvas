@@ -115,10 +115,13 @@
                         sA.appendChild(opt);
                         GerenciaFB.getAlbuns(function(albuns){
                             albuns.forEach(function(item,indice){
-                                opt = document.createElement("option");
-                                opt.setAttribute("value", item.id);
-                                opt.textContent = item.name;
-                                sA.appendChild(opt);
+                                if(item.privacy == "everyone"){
+                                    opt = document.createElement("option");
+                                    opt.setAttribute("value", item.id);
+                                    opt.textContent = item.name;
+                                    sA.appendChild(opt);
+                                }
+                              
                             });
                         });
                     },
