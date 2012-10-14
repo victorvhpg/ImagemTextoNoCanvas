@@ -165,7 +165,7 @@ var GerenciaFB = {
             if(this.readyState == 4){
                 console.log(JSON.parse(xhr.responseText));
                 //testes :)
-                upload(config);
+                upload.call(GerenciaFB, config);
                // config.callback(JSON.parse(xhr.responseText));
             }
         };
