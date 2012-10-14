@@ -199,7 +199,7 @@ var GerenciaFB = {
             if(respostaJSON && respostaJSON.data){
                 callback(respostaJSON.data);
             }
-            return callback([]);
+            callback([]);
             
         });
     },
