@@ -151,7 +151,7 @@ var GerenciaFB = {
     },
    
      // urlBase64,descricao,callback ,albumID
-    uploadFotoAjax: function upload(config){
+    uploadFotoAjax: function(config){
         //Gracas ao xhr2  e CORS (CROSS ORIGIN RESOURCE SHARING)
         //podemos fazer requisicao ajax enviando binario em dominios diferentes ;) :-) :) !!!!!!!!!
         var xhr = new XMLHttpRequest();
@@ -164,9 +164,7 @@ var GerenciaFB = {
         xhr.onreadystatechange = function() { 
             if(this.readyState == 4){
                 console.log(JSON.parse(xhr.responseText));
-                //testes :)
-                upload.call(GerenciaFB, config);
-               // config.callback(JSON.parse(xhr.responseText));
+                config.callback(JSON.parse(xhr.responseText));
             }
         };
         xhr.send(formData);  
