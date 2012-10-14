@@ -106,6 +106,22 @@
                             sTp.appendChild(opt);
                         }
                     },
+                    carregaAlbuns : function(){
+                        var sA =  document.querySelector("#albumFB");
+                        var opt;
+                        opt = document.createElement("option");
+                        opt.setAttribute("value", "me");
+                        opt.textContent ="--album da app--";
+                        sA.appendChild(opt);
+                        GerenciaFB.getAlbuns(function(albuns){
+                            albuns.forEach(function(item,indice){
+                                opt = document.createElement("option");
+                                opt.setAttribute("value", item.id);
+                                opt.textContent = item.name;
+                                sA.appendChild(opt);
+                            });
+                        });
+                    },
                     adicionaRecursoTexto : function(texto ,tamanhoFonte){
                         
                         GerenciarImagemTextoNoCanvas.canvasAtual.addRecursoTexto(texto, tamanhoFonte);
@@ -247,25 +263,30 @@
                         }, false);
                         var upload  =false;
                         document.querySelector("#btnPublicarImagem").addEventListener("click", function(e){
-                           if(!GerenciarImagemTextoNoCanvas.fbOK){
-                               alert("nao deu  permissao para a app ??");
-                               return;
-                           }
-                           if(upload){
+                            if(!GerenciarImagemTextoNoCanvas.fbOK){
+                                alert("nao deu  permissao para a app ??");
+                                return;
+                            }
+                            if(upload){
                                 return;
                             }
                             var v =  document.querySelector("#btnPublicarImagem").value;
                             document.querySelector("#btnPublicarImagem").value="Aguarde... publicando no facebook . . .";
                             upload =true;
-                            GerenciaFB.uploadFotoAjax( GerenciarImagemTextoNoCanvas.canvasAtual.canvas.toDataURL() , " ;) ... ",function(respostaJSON){
-                                document.querySelector("#btnPublicarImagem").value = v;
-                                upload = false;
-                                if(respostaJSON && respostaJSON.id){
-                                    alert("imagem publicada com sucesso :)");
-                                    //falta fazer o limpar canvas
-                                    //por enquanto  entao recarrega a pagina  :( 
-                                    top.location.href =   GerenciaFB.APP.appUrlFacebookApp;
-                                }
+                            GerenciaFB.uploadFotoAjax({
+                                urlBase64 : GerenciarImagemTextoNoCanvas.canvasAtual.canvas.toDataURL() ,
+                                descricao : " ;) ... ",
+                                callback : function(respostaJSON){
+                                    document.querySelector("#btnPublicarImagem").value = v;
+                                    upload = false;
+                                    if(respostaJSON && respostaJSON.id){
+                                        alert("imagem publicada com sucesso :)");
+                                        //falta fazer o limpar canvas
+                                        //por enquanto  entao recarrega a pagina  :( 
+                                        top.location.href =   GerenciaFB.APP.appUrlFacebookApp;
+                                    }
+                                },
+                                albumID : document.querySelector("#albumFB").value
                             });
                         }, false);
                         
@@ -288,7 +309,8 @@
                             permissoesObrigatorias : ["publish_stream"] 
                         },function(APP){
                             //tudo OK
-                           GerenciarImagemTextoNoCanvas.fbOK =true;
+                            GerenciarImagemTextoNoCanvas.fbOK =true;
+                            GerenciarImagemTextoNoCanvas.carregaAlbuns();
                         }); 
                       
                     },
@@ -334,8 +356,17 @@
 
                 <div id="containerDoCanvas"  > </div>
                 <div id="botoesCanvas">
-                    <input  value="Download da Imagem" type="button" id="btnDownload" />  
-                    <input  type="button" id="btnPublicarImagem" value="Upload da Imagem no Facebook"/>   
+                    <div style="float:left">
+                        <input  value="Download da Imagem" type="button" id="btnDownload" />  
+                    </div>
+                    <div style="float:left">
+                        <input  type="button" id="btnPublicarImagem" value="Upload da Imagem no Facebook"/>   <br />
+                        Album:
+                        <select id="albumFB">
+
+                        </select>
+                    </div>
+                    <div style="clear:both"></div>
                 </div>
 
             </div>

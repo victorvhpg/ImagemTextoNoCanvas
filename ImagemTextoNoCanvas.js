@@ -1,13 +1,9 @@
 /**
  * @victorvhpg
- * https://github.com/victorvhpg/ImagemTextoNoCanvas
- *  
+ * https://github.com/victorvhpg/ImagemTextoNoCanvas 
  */
-
 (function(w){
     "use strict";
-    
-    
     var ImagemTextoNoCanvas = function(){
         this.canvas =  document.createElement("canvas"); 
         this.ctx =   null;
@@ -20,7 +16,6 @@
         this.LARGURA_MAX = 700;
         this.movendoRecurso = false;
         this.recursoMovendo = null ;
-      
     };
     ImagemTextoNoCanvas.init = function(config){
         return (new ImagemTextoNoCanvas()).init(config);  

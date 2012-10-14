@@ -1,9 +1,7 @@
- /**
+/**
  * @victorvhpg
  * https://github.com/victorvhpg/ImagemTextoNoCanvas
  */ 
-
-
 var GerenciaFB = {
     APP : {
         //id  da app
@@ -12,10 +10,10 @@ var GerenciaFB = {
         channelUrl : "",
         //url da app no facebook
         appUrlFacebookApp : "", 
-        //permissoes que a app  tera
+        //permissoes que a app  tera // "publish_actions,publish_stream,user_photos"
         permissoes : "",  
         //id do usuario
-        userID : "", // "publish_actions,publish_stream,user_photos"
+        userID : "", 
         //permissoes obrigatorias , fica pedindo ate o usuario aceite senao aceitar  fica em loop pedindo :)
         permissoesObrigatorias : []  // ["publish_actions","user_photos"]
     },
@@ -152,21 +150,23 @@ var GerenciaFB = {
             type: 'image/png'
         });
     },
-    uploadFotoAjax: function(urlBase64,descricao,callback){
+   
+     // urlBase64,descricao,callback ,albumID
+     
+    uploadFotoAjax: function(config){
         //Gracas ao xhr2  e CORS (CROSS ORIGIN RESOURCE SHARING)
         //podemos fazer requisicao ajax enviando binario em dominios diferentes ;) :-) :) !!!!!!!!!
         var xhr = new XMLHttpRequest();
-        var url = "https://graph.facebook.com/me/photos?access_token="+this.APP.accessToken;
+        var url = "https://graph.facebook.com/"+ config.albumID + "/photos?access_token="+this.APP.accessToken;
         var formData = new FormData();
         //converte a imagem para binario e coloca no form
-        formData.append("source", this.dataURI2Blob(urlBase64));
-        formData.append("message" , descricao);
+        formData.append("source", this.dataURI2Blob(config.urlBase64));
+        formData.append("message" , config.descricao);
         xhr.open('POST', url, true);
-      
         xhr.onreadystatechange = function() { 
             if(this.readyState == 4){
                 console.log(JSON.parse(xhr.responseText));
-                callback(JSON.parse(xhr.responseText));
+                config.callback(JSON.parse(xhr.responseText));
             }
            
         };
@@ -175,14 +175,14 @@ var GerenciaFB = {
     } ,
     uploadFoto : function(urlImg , descricao,callback){
       
-        FB.api('me/photos', 'post', {
+        FB.api("me/photos", 'post', {
             message:descricao,
             access_token: this.APP.accessToken,
             url: urlImg
         }, function (response) {
 
             callback(response);
-            /*
+        /*
             if (!response || response.error) {
              
                //console.log("erro");
@@ -195,6 +195,17 @@ var GerenciaFB = {
         });    
                     
       
+    },
+    
+    getAlbuns:function(callback){
+        //https://developers.facebook.com/tools/explorer/?method=GET&path=me%2Falbums
+        FB.api("me/albums" , function(respostaJSON){
+            if(respostaJSON && respostaJSON.data){
+                callback(respostaJSON.data);
+            }
+            return callback([]);
+            
+        });
     },
     login : function(){
         //========obter autenticacao===========================
